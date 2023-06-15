@@ -650,7 +650,7 @@ Você já consegue listar as músicas dos álbuns. Nessa etapa você poderá mar
 
   - Esse input deve possuir uma label com o atributo ```data-testid={`checkbox-music-${trackId}`}```, onde `trackId` é a propriedade `trackId` do objeto recebido pela API.
   - Caso a musica esteja favoritada, deve ser exibida a imagem `checked_heart.png` dentro da label, caso contrário a imagem `empty_heart.png` deve ser exibida, ambas estão presentes na pasta `src/images`.
-  - A imagem deve conter o texto `alt` igual à `favorite`
+  - A imagem deve conter o texto alternativo, `alt`, igual a `favorite`.
   <details><summary><b> Ilustração:</b></summary>
 
   ![requisito-5](./images/requisito5.png)
@@ -663,7 +663,7 @@ Você já consegue listar as músicas dos álbuns. Nessa etapa você poderá mar
 
   - Existe um checkbox para cada música da lista.
   - Ao clicar no checkbox, a imagem do coração muda de preenchido para vazio ou vice-versa.
-  - A imagem de coração contém o texto de alt com `favorite`.
+  - A imagem de coração contém o texto alternativo igual a `favorite`.
 
 </details>
 
