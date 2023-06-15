@@ -49,7 +49,7 @@ describe('5 - Crie o mecanismo para adicionar músicas na lista de músicas favo
 
       const checkbox = screen.getByTestId('checkbox-music-31');
 
-      const img = within(checkbox).getByRole('presentation');
+      const img = within(checkbox).getByAltText('favorite');
       expect(img).toHaveAttribute('src', '/src/images/empty_heart.png');
 
       userEvent.click(checkbox);
