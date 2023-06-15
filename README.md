@@ -287,23 +287,23 @@ Neste projeto, verificamos se você é capaz de:
 <details>
   <summary><strong>:convenience_store: Desenvolvimento </strong></summary><br />
 
-  Nos últimos projetos, por mais que o app tenha sido desenvolvido utilizando múltiplos componentes, o que é uma boa prática, todas as funcionalidades eram acessadas ao mesmo tempo, no mesmo lugar, utilizando apenas uma URL (`localhost:3000`, normalmente). À medida que seus apps se tornarem maiores e mais complexos, isso será inviável. Desta vez, as funcionalidades do app serão agrupadas e organizadas em rotas.
+  Nos últimos projetos, por mais que o app tenha sido desenvolvido utilizando múltiplos componentes, o que é uma boa prática, todas as funcionalidades eram acessadas ao mesmo tempo, no mesmo lugar, utilizando apenas uma URL (`localhost:5173`, normalmente). À medida que seus apps se tornarem maiores e mais complexos, isso será inviável. Desta vez, as funcionalidades do app serão agrupadas e organizadas em rotas.
 
   Uma rota define o que deve ser renderizado na página ao abri-la. Cada rota está associada a um caminho. O caminho é a parte da URL após o domínio (nome do site, de forma simplificada). Por exemplo, em `www.site.com/projetos/meu-jogo`, o caminho é `/projetos/meu-jogo`. Até agora, todos os apps React que você desenvolveu tinham somente uma rota, a raiz (`/`).
 
-  Outra diferença importante neste projeto em relação aos anteriores é que você vai consumir e enviar dados para APIs para pesquisar a banda ou o artista, recuperar as músicas de cada álbum e salvar as músicas favoritas, além de editar as informações da pessoa logada. Desse modo, você terá de lidar com requisições assíncronas e promises. Também deverá fazer uso dos métodos de ciclo de vida (lifecycle methods) e de estados para controlar o que é renderizado por seus componentes dependendo do momento em que as requisições se encontram.
+  Outra diferença importante neste projeto em relação aos anteriores é que você vai consumir e enviar dados para APIs para pesquisar a banda ou o artista, recuperar as músicas de cada álbum e salvar as músicas favoritas, além de editar as informações da pessoa logada. Desse modo, você terá de lidar com requisições assíncronas e promises. Também deverá fazer uso dos efeitos colaterais (`useEffect`) e de estados para controlar o que é renderizado por seus componentes dependendo do momento em que as requisições se encontram.
 
   ### Como desenvolver
 
   Este repositório já contém um template com um App React criado. Após clonar o projeto e instalar as dependências, você deverá completar esse template implementando os requisitos listados na seção [Requisitos](#requisitos).
 
-  Também já existe no projeto um diretório `src/services` que contém os arquivos `favoriteSongsAPI.js`, `searchAlbumsAPI.js`, `userAPI.js` e `musicsAPI.js`. Esses arquivos serão responsáveis por lidar com as requisições simuladas utilizadas durante o desenvolvimento. Entenda mais a respeito deles a seguir.
+  Também já existe no projeto um diretório `src/services` que contém os arquivos `favoriteSongsAPI.ts`, `searchAlbumsAPI.ts`, `userAPI.ts` e `musicsAPI.ts`. Esses arquivos serão responsáveis por lidar com as requisições simuladas utilizadas durante o desenvolvimento. Você também vai encontrar o arquivo `src/types.ts`, neste arquivo estão armazenados todos os tipos utilizados pelas funções presentes nos arquivos de serviço mencionados acima. Entenda mais a respeito deles a seguir.
 
-  <details><summary><strong> <code>userAPI.js</code></strong></summary>
+  <details><summary><strong> <code>userAPI.ts</code></strong></summary>
 
-  O arquivo `userAPI.js` será utilizado para manipular as informações da pessoa logada; dentro dele estarão as funções para recuperar e atualizar as informações da pessoa usuária, além de criar um novo perfil. Todas essas funções simulam o funcionamento de uma API.
+  O arquivo `userAPI.ts` será utilizado para manipular as informações da pessoa logada; dentro dele estarão as funções para recuperar e atualizar as informações da pessoa usuária, além de criar um novo perfil. Todas essas funções simulam o funcionamento de uma API.
 
-  - Para recuperar as informações da pessoa usuária, utilize a função `getUser`. Ela retornará um objeto com as informações da pessoa logada caso exista.
+  - Para recuperar as informações da pessoa usuária, utilize a função `getUser`. Ela retornará um objeto do tipo `UserType` com as informações da pessoa logada caso exista.
   **Atenção**: caso não encontre nenhuma informação da pessoa usuária, a API retornará um objeto vazio.
 
   - Para criar um perfil, utilize a função `createUser`, que recebe como parâmetro o objeto que contém as informações da pessoa usuária. Esse objeto deverá conter a seguinte estrutura:
@@ -317,30 +317,30 @@ Neste projeto, verificamos se você é capaz de:
   }
   ```
 
-  Para atualizar as informações da pessoa logada, utilize a função `updateUser`. Assim como a função anterior, ela recebe um objeto com as informações que serão atualizadas, e esse objeto deve conter a mesma estrutura do anterior.
+  Para atualizar as informações da pessoa logada, utilize a função `updateUser`. Assim como a função anterior, ela recebe um objeto do tipo `UserType` com as informações que serão atualizadas, e esse objeto deve conter a mesma estrutura do anterior.
   </details>
 
-  <details><summary><strong> <code>searchAlbumsAPI.js</code></strong></summary>
+  <details><summary><strong> <code>searchAlbumsAPI.ts</code></strong></summary>
 
-  O arquivo `searchAlbumsAPI.js` contém uma função que faz uma requisição a uma API e retorna os álbuns de uma banda ou um artista. Para essa função funcionar, ela recebe como parâmetro uma string, que deve ser o nome da banda ou do artista. O retorno dessa função, quando encontra as informações, é um array com cada álbum dentro de um objeto.
+  O arquivo `searchAlbumsAPI.ts` contém uma função que faz uma requisição a uma API e retorna os álbuns de uma banda ou um artista, ou seja, um _array_ do tipo `AlbumType`. Para essa função funcionar, ela recebe como parâmetro uma string, que deve ser o nome da banda ou do artista. O retorno dessa função, quando encontra as informações, é um array com cada álbum dentro de um objeto.
   **Atenção**: caso não encontre nenhuma informação da banda ou do artista, a API retornará um array vazio.
   </details>
-  <details><summary><strong> <code>favoriteSongsAPI.js</code></strong></summary>
+  <details><summary><strong> <code>favoriteSongsAPI.ts</code></strong></summary>
 
-  O arquivo `favoriteSongsAPI.js` é responsável por manipular as informações das músicas favoritas. Nele, há as funções `getFavoriteSongs`, `addSong` e `removeSong`, que recuperam, adicionam e removem músicas dos favoritos, respectivamente. Assim como nos arquivos anteriores, todas as funções simulam o funcionamento de uma API.
+  O arquivo `favoriteSongsAPI.ts` é responsável por manipular as informações das músicas favoritas. Nele, há as funções `getFavoriteSongs`, `addSong` e `removeSong`, que recuperam, adicionam e removem músicas dos favoritos, respectivamente. Assim como nos arquivos anteriores, todas as funções simulam o funcionamento de uma API.
 
-  A função `getFavoriteSongs` retorna um array com as músicas favoritadas ou um array vazio caso não haja nenhuma música.
+  A função `getFavoriteSongs` retorna um array do tipo `SongType` com as músicas favoritadas ou um array vazio caso não haja nenhuma música.
 
-  A função `addSong` recebe um objeto que representa a música que você quer salvar como favorita e adiciona ao array já existente das músicas que já foram favoritadas.
+  A função `addSong` recebe um objeto do tipo `SongType` que representa a música que você quer salvar como favorita e adiciona ao array já existente das músicas que já foram favoritadas.
 
-  A função `removeSong` também recebe um objeto que representa a música que você deseja remover da lista de músicas favoritas.
+  A função `removeSong` também recebe um objeto do tipo `SongType` que representa a música que você deseja remover da lista de músicas favoritas.
 
   **Atenção**: os objetos de música precisam ter a chave `trackId` para que elas sejam adicionadas e removidas corretamente.
   </details>
-  <details><summary><strong> <code>musicsAPI.js</code></strong></summary>
+  <details><summary><strong> <code>musicsAPI.ts</code></strong></summary>
 
-  O arquivo `musicsAPI.js` contém a função `getMusics` que faz uma requisição a uma API e retorna as músicas de um álbum. Ela recebe como parâmetro uma string, que deve ser o id do álbum. O retorno dessa função, quando encontra as informações, é um array em que o primeiro elemento é um objeto com informações do álbum e o restante dos elementos são as músicas do álbum.
-  **Atenção**: caso não encontre nenhuma informação, a API retornará um array vazio.
+  O arquivo `musicsAPI.ts` contém a função `getMusics` que faz uma requisição a uma API e retorna as músicas de um álbum. Ela recebe como parâmetro uma string, que deve ser o id do álbum. O retorno dessa função, quando encontra as informações, é um array em que o **primeiro elemento** é um objeto do tipo `AlbumType` com informações do álbum e o **restante dos elementos** são as músicas do álbum (objetos do tipo `SongType`).
+  **Atenção**: caso não encontre nenhuma informação, a API retornará um **array vazio**.
   </details>
 </details>
 
@@ -350,7 +350,7 @@ Neste projeto, verificamos se você é capaz de:
 Ao finalizar e submeter o projeto, não se esqueça de avaliar sua experiência preenchendo o formulário. 
 **Leva menos de 3 minutos!**
 
-[FORMULÁRIO DE AVALIAÇÃO DE PROJETO](https://be-trybe.typeform.com/to/ZTeR4IbH#cohort_hidden=CH32-B&template=betrybe/sd-0x-project-trybetunes-vite-ts)
+[FORMULÁRIO DE AVALIAÇÃO DE PROJETO](https://be-trybe.typeform.com/to/ZTeR4IbH)
 
 </details>
 
@@ -410,7 +410,7 @@ Você pode mudar o nome dos componentes se desejar, este é apenas um exemplo.
 
 #### Salvando o nome da pessoa usuária
 
-- Ao clicar no botão `Entrar`, utilize a função `createUser` da `userAPI` para salvar o nome digitado. A função `createUser` espera receber como argumento um objeto com as informações da pessoa e retorna uma `Promise`, que é resolvida quando a informação é salva.
+- Ao clicar no botão `Entrar`, utilize a função `createUser` que se encontra no arquivo `src/services/userAPI.ts` para salvar o nome digitado. A função `createUser` espera receber como argumento um objeto com as informações da pessoa e retorna uma `Promise`, que é resolvida quando a informação é salva.
 
 Exemplo de como utilizar a função `createUser`:
 
@@ -461,7 +461,7 @@ Este formulário deve conter um input e um botão para que seja possível pesqui
 
 Com a estrutura da tela de pesquisa criada, agora é hora de fazer uma requisição e receber a lista de álbuns da banda ou artista pesquisada.
 
-- <details><summary> Ao clicar no botão de <code>Pesquisar</code>, limpe o valor do input e faça uma requisição utilizando a função do arquivo <code>services/searchAlbumsAPIs.js</code>:</summary>
+- <details><summary> Ao clicar no botão de <code>Pesquisar</code>, limpe o valor do input e faça uma requisição utilizando a função do arquivo <code>services/searchAlbumsAPIs.ts</code>:</summary>
 
   - :bulb: Lembre-se que essa função espera receber uma string com o nome da banda ou artista.
 
@@ -531,7 +531,7 @@ Agora que está tudo pronto, você poderá exibir a lista de músicas do álbum 
 
 <details><summary>Crie a lista dentro do componente <code>Album</code>, que é renderizado na rota <code>/album/:id</code>: </summary>
 
-- Ao entrar na página, faça uma requisição utilizando a função `getMusics` do arquivo `musicsAPI.js`. Lembre-se que essa função espera receber uma string com o id do álbum.
+- Ao entrar na página, faça uma requisição utilizando a função `getMusics` do arquivo `src/services/musicsAPI.ts`. Lembre-se que essa função espera receber uma string com o id do álbum.
 - Enquanto aguarda a resposta da API, exiba a mensagem `Carregando...` na tela.
 
 - Exiba o nome da banda ou artista na tela. Você pode usar qualquer tag HTML que faça sentido, desde que ela tenha o atributo `data-testid="artist-name"`.
@@ -609,11 +609,13 @@ Para tocar o preview, você deve usar a tag `audio` do próprio HTML. Sua implem
 
   - O terceiro link deve redirecionar para a rota `/profile` e possuir o data-testid `link-to-profile`.
 
-- Utilize a função `getUser` da `userAPI` para recuperar o nome da pessoa logada e exiba essa informação na tela. Você pode usar qualquer tag HTML que faça sentido, desde que ela tenha o atributo `data-testid="header-user-name"`.
+- Utilize a função `getUser` presente no arquivo `src/services/userApi.ts` para recuperar o nome da pessoa logada e exiba essa informação na tela. Você pode usar qualquer tag HTML que faça sentido, desde que ela tenha o atributo `data-testid="header-user-name"`.
 - Enquanto estiver aguardando a resposta da `getUser`, exiba apenas a mensagem de `Carregando...`.
 
 Crie um componente chamado `Layout` que deverá renderizar o componente `Header`
 - esse layout deverá ser utilizado em uma rota pai de todas as rotas da aplicação, com exceção da página de `Login`.
+
+**⚠️Atenção:** Será necessário o uso do componente `Outlet` da `react-router-dom` para criar o componente `Layout`.
 
 </details><br />
 
@@ -621,6 +623,8 @@ Crie um componente chamado `Layout` que deverá renderizar o componente `Header`
   <summary><strong>O que será verificado</strong></summary><br />
 
 - Os links de navegação são exibidos no componente `Header`.
+
+- O componente `Layout` faz uso do `Outlet` para renderizar os conteúdos das páginas.
 
 - O componente `Header` não é renderizado na página `/`.
 
