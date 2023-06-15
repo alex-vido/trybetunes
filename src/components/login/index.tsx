@@ -39,6 +39,10 @@ function Login() {
       isLoading: true,
     }));
     await createUser({ name: data.userName });
+    setData((prevData) => ({
+      ...prevData,
+      isLoading: false,
+    }));
     navigate('/search');
   };
 
