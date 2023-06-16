@@ -13,14 +13,15 @@ function Login() {
 
   const handleChange = (event:React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
+    isNameValid(value);
     setData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
 
-  const isNameValid = () => {
-    if (data.userName.length >= 3) {
+  const isNameValid = (value: string) => {
+    if (value.length >= 3) {
       setData((prevData) => ({
         ...prevData,
         nameValid: true,
@@ -60,7 +61,6 @@ function Login() {
             onChange={ (event) => {
               handleChange(event);
             } }
-            onKeyUp={ isNameValid }
           />
           <button
             data-testid="login-submit-button"
