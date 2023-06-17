@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import searchAlbumsAPI from '../../services/searchAlbumsAPI';
 import { AlbumType } from '../../types';
 
@@ -104,12 +105,12 @@ function Search() {
                     src={ artworkUrl100 }
                     alt={ collectionName }
                   />
-                  <a
+                  <NavLink
                     data-testid={ `link-to-album-${collectionId}` }
-                    href={ `/album/${collectionId}` }
+                    to={ `/album/${collectionId}` }
                   >
                     {collectionName}
-                  </a>
+                  </NavLink>
                 </li>
               );
             })}
