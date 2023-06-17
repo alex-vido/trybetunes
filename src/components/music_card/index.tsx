@@ -6,13 +6,13 @@ type MusicCardProps = {
   trackName: string;
   previewUrl: string;
   trackId: number;
-  trackIdString: string,
 };
 
 function MusicCard({ trackName, previewUrl, trackId }: MusicCardProps) {
-  const trackIdString = trackId.toString();
+  const trackIdString: string = trackId.toString();
+
   const [checkboxState, setCheckboxState] = useState<{
-    [key: number]: boolean }>({ [trackIdString]: false });
+    [key: string]: boolean }>({ [trackIdString]: false });
 
   const handleCheckboxChange = () => {
     setCheckboxState((prevState) => ({
