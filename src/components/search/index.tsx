@@ -8,7 +8,7 @@ type SearchProps = {
   isLoading: boolean,
   uploadBand: boolean,
   savedNameBand: string,
-  bandData: object[],
+  bandData: AlbumType[],
 };
 
 function Search() {
@@ -59,6 +59,7 @@ function Search() {
       uploadBand: true,
     }));
   };
+
   if (data.isLoading) {
     return <h1>Carregando...</h1>;
   }
@@ -93,8 +94,9 @@ function Search() {
             { data.savedNameBand }
           </h2>
           <ul>
-            { data.bandData.map(
-              ({ collectionId, collectionName, artworkUrl100 }: AlbumType) => (
+            { data.bandData.map((album: AlbumType) => {
+              const { collectionId, collectionName, artworkUrl100 } = album;
+              return (
                 <li
                   key={ collectionId }
                 >
@@ -103,14 +105,14 @@ function Search() {
                     alt={ collectionName }
                   />
                   <a
-                    href={ `/album/${collectionId}` }
                     data-testid={ `link-to-album-${collectionId}` }
+                    href={ `/album/${collectionId}` }
                   >
                     {collectionName}
                   </a>
                 </li>
-              ),
-            )}
+              );
+            })}
           </ul>
         </div>
       ) : (
