@@ -11,7 +11,7 @@ import { AlbumType, SongType } from '../../types';
   };
 
 function Album() {
-  const { id } = useParams();
+  const { id = '' } = useParams();
   const [data, setData] = useState<AlbumTypeProps>({
     isLoading: false,
     album: {} as AlbumType,
