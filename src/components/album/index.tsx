@@ -4,11 +4,13 @@ import getMusics from '../../services/musicsAPI';
 import MusicCard from '../music_card';
 import { AlbumType, SongType } from '../../types';
 import IsLoading from '../is_loading';
+import { getFavoriteSongs } from '../../services/favoriteSongsAPI';
 
   type AlbumTypeProps = {
     isLoading: boolean
     album: AlbumType
     musics: SongType[]
+    favoriteSongs: SongType[]
   };
 
 function Album() {
@@ -17,18 +19,22 @@ function Album() {
     isLoading: false,
     album: {} as AlbumType,
     musics: [],
+    favoriteSongs: [],
   });
-  const { album, musics, isLoading } = data;
+  const { album, musics, isLoading, favoriteSongs } = data;
 
   useEffect(() => {
     const getMusicsFetch = async () => {
       setData((prevData) => ({ ...prevData, isLoading: true }));
       const fetchMusic = await getMusics(id);
+      const fetchFavorites = await getFavoriteSongs();
       setData((prevData) => ({
         ...prevData,
         album: fetchMusic[0] as AlbumType,
         musics: fetchMusic.slice(1) as SongType[],
+        favoriteSongs: fetchFavorites,
       }));
+
       setData((prevData) => ({ ...prevData, isLoading: false }));
     };
     getMusicsFetch();
@@ -76,6 +82,7 @@ function Album() {
             trackName={ music.trackName }
             previewUrl={ music.previewUrl }
             trackId={ music.trackId }
+            favoriteSongs={ favoriteSongs }
           />))
         }
           </div>

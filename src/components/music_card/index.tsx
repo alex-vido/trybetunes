@@ -1,15 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import checkedIcon from '../../images/checked_heart.png';
 import uncheckedIcon from '../../images/empty_heart.png';
 import { removeSong, addSong } from '../../services/favoriteSongsAPI';
+import { SongType } from '../../types';
 
 type MusicCardProps = {
   trackName: string;
   previewUrl: string;
   trackId: number;
+  favoriteSongs: SongType[];
 };
 
-function MusicCard({ trackName, previewUrl, trackId }: MusicCardProps) {
+function MusicCard({ trackName, previewUrl, trackId, favoriteSongs }: MusicCardProps) {
   const trackIdString: string = trackId.toString();
 
   const [checkboxState, setCheckboxState] = useState(false);
@@ -23,6 +25,13 @@ function MusicCard({ trackName, previewUrl, trackId }: MusicCardProps) {
       removeSong({ trackName, previewUrl, trackId });
     }
   };
+
+  useEffect(() => {
+    const isFavorite = favoriteSongs
+      .find((favoriteSong) => favoriteSong.trackId === trackId);
+    if (isFavorite) setCheckboxState(true);
+    else setCheckboxState(false);
+  }, [favoriteSongs, trackId]);
 
   return (
     <div
@@ -58,11 +67,10 @@ function MusicCard({ trackName, previewUrl, trackId }: MusicCardProps) {
           />
           <input
             type="checkbox"
-            name="favorited-song"
             checked={ checkboxState }
             onChange={ (event) => handleCheckboxChange(event) }
             id={ trackIdString }
-            style={ { display: 'none' } }
+            style={ { opacity: '0' } }
           />
         </label>
       </div>
