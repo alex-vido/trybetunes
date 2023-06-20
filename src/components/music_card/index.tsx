@@ -42,7 +42,6 @@ function MusicCard({ trackName, previewUrl, trackId }: MusicCardProps) {
         >
           <track kind="captions" />
           O seu navegador não suporta o elemento
-          {' '}
           <code>audio</code>
         </audio>
         <label
