@@ -4,39 +4,28 @@ import IsLoading from '../is_loading';
 import MusicCard from '../music_card';
 import { SongType } from '../../types';
 
-  type FavoriteSongsProps = {
-    favoriteSongs: SongType[]
-    isLoading: boolean
-  };
-
 function Favorites() {
-  const [data, setData] = useState<FavoriteSongsProps>({
-    favoriteSongs: [],
-    isLoading: false,
-  });
-  const { favoriteSongs, isLoading } = data;
+  const [favoriteSongs, setFavoriteSongs] = useState<SongType[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
-    const fetchFavorites = async () => {
-      setData((prevData) => ({ ...prevData, isLoading: true }));
+    const fetchFavoritesInitial = async () => {
+      setIsLoading(true);
       const favorites = await getFavoriteSongs();
-      setData((prevData) => ({
-        ...prevData,
-        favoriteSongs: favorites,
-      }));
-      setData((prevData) => ({ ...prevData, isLoading: false }));
+      setFavoriteSongs(favorites);
+      setIsLoading(false);
     };
-    fetchFavorites();
+    fetchFavoritesInitial();
   }, []);
 
   useEffect(() => {
     const fetchFavorites = async () => {
+      setIsLoading(true);
       const favorites = await getFavoriteSongs();
-      setData((prevData) => ({
-        ...prevData,
-        favoriteSongs: favorites,
-      }));
+      setFavoriteSongs(favorites);
     };
     fetchFavorites();
+    setIsLoading(false);
   }, [favoriteSongs]);
 
   if (isLoading) return (<IsLoading />);
@@ -49,7 +38,7 @@ function Favorites() {
 
     >
 
-      { favoriteSongs.length === 0
+      { (favoriteSongs.length === 0 && !isLoading)
         ? (
           <p
             className="text-4xl"

@@ -10,18 +10,17 @@ import { getFavoriteSongs } from '../../services/favoriteSongsAPI';
     isLoading: boolean
     album: AlbumType
     musics: SongType[]
-    favoriteSongs: SongType[]
   };
 
 function Album() {
+  const [favoriteSongs, setFavoriteSongs] = useState<SongType[]>([]);
   const { id = '' } = useParams();
   const [data, setData] = useState<AlbumTypeProps>({
     isLoading: false,
     album: {} as AlbumType,
     musics: [],
-    favoriteSongs: [],
   });
-  const { album, musics, isLoading, favoriteSongs } = data;
+  const { album, musics, isLoading } = data;
 
   useEffect(() => {
     const getMusicsFetch = async () => {
@@ -32,13 +31,13 @@ function Album() {
         ...prevData,
         album: fetchMusic[0] as AlbumType,
         musics: fetchMusic.slice(1) as SongType[],
-        favoriteSongs: fetchFavorites,
       }));
+      setFavoriteSongs(fetchFavorites);
 
       setData((prevData) => ({ ...prevData, isLoading: false }));
     };
     getMusicsFetch();
-  }, []);
+  }, [id]);
 
   return (
     isLoading ? (<IsLoading />)
@@ -83,6 +82,7 @@ function Album() {
             previewUrl={ music.previewUrl }
             trackId={ music.trackId }
             favoriteSongs={ favoriteSongs }
+            favoriteActualization={ setFavoriteSongs }
           />))
         }
           </div>

@@ -1,6 +1,15 @@
+import { useEffect } from 'react';
+import { getUser } from '../../services/userAPI';
+
 function Profile() {
+  useEffect(() => {
+    const fetchUser = async () => {
+      await getUser();
+    };
+    fetchUser();
+  }, []);
   return (
-    <p>Profile</p>
+    <h2>Teste</h2>
   );
 }
 

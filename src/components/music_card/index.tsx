@@ -11,7 +11,7 @@ type MusicCardProps = {
   favoriteSongs: SongType[];
 };
 
-function MusicCard({ trackName, previewUrl, trackId, favoriteSongs }: MusicCardProps) {
+function MusicCard({ trackName, previewUrl, trackId, favoriteSongs, favoriteActualization }: MusicCardProps) {
   const trackIdString: string = trackId.toString();
 
   const [checkboxState, setCheckboxState] = useState(false);
@@ -23,6 +23,7 @@ function MusicCard({ trackName, previewUrl, trackId, favoriteSongs }: MusicCardP
       addSong({ trackName, previewUrl, trackId });
     } else {
       removeSong({ trackName, previewUrl, trackId });
+      favoriteActualization(favoriteSongs);
     }
   };
 
