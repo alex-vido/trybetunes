@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getUser } from '../../services/userAPI';
+import IsLoading from '../is_loading';
 
 function Header() {
   const [isLoading, setIsLoading] = useState(true);
@@ -16,32 +17,52 @@ function Header() {
   }, []);
 
   return (
-    isLoading ? (<h2>Carregando...</h2>)
+    isLoading ? (
+      <header
+        className={ `flex items-center justify-between bg-white 
+      dark:bg-gray-900 p-4 border-b-2 border-gray-300` }
+      >
+        <h2
+          className="text-2xl text-black dark:text-white"
+        >
+          Carregando...
+
+        </h2>
+      </header>
+    )
       : (
         <header
+          className={ `flex items-center justify-between bg-white 
+          dark:bg-gray-900 p-4  border-b border-gray-300` }
           data-testid="header-component"
         >
-          <NavLink
-            to="/search"
-            data-testid="link-to-search"
-          >
-            Pesquisar
+          <div className="flex">
+            <NavLink
+              className="mr-4 text-black dark:text-white"
+              to="/search"
+              data-testid="link-to-search"
+            >
+              Pesquisar
 
-          </NavLink>
-          <NavLink
-            to="/favorites"
-            data-testid="link-to-favorites"
-          >
-            Favoritos
+            </NavLink>
+            <NavLink
+              className="mr-4 text-black dark:text-white"
+              to="/favorites"
+              data-testid="link-to-favorites"
+            >
+              Favoritos
 
-          </NavLink>
-          <NavLink
-            to="/profile"
-            data-testid="link-to-profile"
-          >
-            Profile
-          </NavLink>
+            </NavLink>
+            <NavLink
+              className="mr-4 text-black dark:text-white"
+              to="/profile"
+              data-testid="link-to-profile"
+            >
+              Profile
+            </NavLink>
+          </div>
           <p
+            className="text-ls text-black dark:text-white"
             data-testid="header-user-name"
           >
             { userName }

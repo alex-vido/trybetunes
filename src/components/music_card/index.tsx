@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import checked from '../../images/checked_heart.png';
-import unchecked from '../../images/empty_heart.png';
+import checkedIcon from '../../images/checked_heart.png';
+import uncheckedIcon from '../../images/empty_heart.png';
+import { removeSong, addSong } from '../../services/favoriteSongsAPI';
 
 type MusicCardProps = {
   trackName: string;
@@ -11,52 +12,61 @@ type MusicCardProps = {
 function MusicCard({ trackName, previewUrl, trackId }: MusicCardProps) {
   const trackIdString: string = trackId.toString();
 
-  const [checkboxState, setCheckboxState] = useState<{
-    [key: string]: boolean }>({ [trackIdString]: false });
+  const [checkboxState, setCheckboxState] = useState(false);
 
-  const handleCheckboxChange = () => {
-    setCheckboxState((prevState) => ({
-      ...prevState,
-      [trackIdString]: !prevState[trackIdString],
-    }));
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { checked } = event.target;
+    setCheckboxState(checked);
+    if (checked) {
+      addSong({ trackName, previewUrl, trackId });
+    } else {
+      removeSong({ trackName, previewUrl, trackId });
+    }
   };
 
-  const isChecked = checkboxState[trackIdString] || false;
-
   return (
-    <div>
-      <p>{ trackName }</p>
-      <audio
-        data-testid="audio-component"
-        src={ previewUrl }
-        controls
+    <div
+      className="flex items-center items-center justify-between"
+    >
+      <div>
+        <p>{ trackName }</p>
+      </div>
+      <div
+        className="flex flex-row items-center"
       >
-        <track kind="captions" />
-        O seu navegador não suporta o elemento
-        {' '}
-        <code>audio</code>
-      </audio>
-      <label
-        htmlFor={ `check-${trackIdString}` }
-        data-testid={ `checkbox-music-${trackIdString}` }
-      >
-        <img
-          src={
-            isChecked
-              ? checked
-              : unchecked
+        <audio
+          className="m-2"
+          data-testid="audio-component"
+          src={ previewUrl }
+          controls
+        >
+          <track kind="captions" />
+          O seu navegador não suporta o elemento
+          {' '}
+          <code>audio</code>
+        </audio>
+        <label
+          htmlFor={ trackIdString }
+          data-testid={ `checkbox-music-${trackIdString}` }
+        >
+          <img
+            src={
+              checkboxState
+                ? checkedIcon
+                : uncheckedIcon
             }
-          alt="favorite"
-        />
-      </label>
-      <input
-        checked={ isChecked }
-        type="checkbox"
-        onChange={ handleCheckboxChange }
-        id={ `check-${trackIdString}` }
-        style={ { display: 'none' } }
-      />
-
+            alt="favorite"
+          />
+          <input
+            type="checkbox"
+            name="favorited-song"
+            checked={ checkboxState }
+            onChange={ (event) => handleCheckboxChange(event) }
+            id={ trackIdString }
+            style={ { display: 'none' } }
+          />
+        </label>
+      </div>
     </div>
   );
 }
