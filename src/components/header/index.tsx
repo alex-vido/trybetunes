@@ -1,7 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getUser } from '../../services/userAPI';
-import IsLoading from '../is_loading';
 
 function Header() {
   const [isLoading, setIsLoading] = useState(true);
@@ -15,7 +14,6 @@ function Header() {
     };
     fetchUser();
   }, []);
-
   return (
     isLoading ? (
       <header

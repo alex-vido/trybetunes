@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { getUser } from '../../services/userAPI';
 import { UserType } from '../../types';
 import IsLoading from '../is_loading';
+import noPhoto from '../../images/no_photo.png';
 
 function Profile() {
   const [isLoading, setIsLoading] = useState(false);
@@ -28,7 +29,7 @@ function Profile() {
   if (isLoading) return (<IsLoading />);
   return (
     <div>
-      <img src={ image } alt="user" data-testid="profile-image" />
+      <img src={ image ?? noPhoto } alt="user" data-testid="profile-image" />
       <NavLink
         to="/profile/edit"
       >
