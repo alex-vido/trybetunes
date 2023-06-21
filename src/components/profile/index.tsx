@@ -34,7 +34,7 @@ function Profile() {
       style={ { minHeight: 'calc(100vh - 57px)' } }
     >
       <div
-        className="flex items-center justify-between w-96 mb-32"
+        className="flex items-center justify-between w-96 mb-24"
       >
         <img
           className="rounded-full w-48 h-48"

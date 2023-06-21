@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { getUser, updateUser } from '../../services/userAPI';
 import { UserType } from '../../types';
 import IsLoading from '../is_loading';
+import noPhoto from '../../images/no_photo.png';
 
 function ProfileEdit() {
   const navigate = useNavigate();
@@ -14,12 +15,10 @@ function ProfileEdit() {
     description: '',
   });
 
+  const { name, email, image, description } = user;
+
   const regexEmail = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
-  const validEmail = (email: string) => {
-    if (name.length > 0 && description.length > 0 && image.length > 0) {
-      return regexEmail.test(email);
-    }
-  };
+  const validation = (name.length > 0 && description.length > 0 && image.length > 0 && regexEmail.test(email))
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
@@ -29,7 +28,6 @@ function ProfileEdit() {
     }));
   };
 
-  const { name, email, image, description } = user;
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -46,6 +44,10 @@ function ProfileEdit() {
     navigate('/profile');
   };
 
+  const disabled = `bg-blue-500 text-white font-bold py-2 px-4 
+    rounded opacity-50 cursor-not-allowed`;
+  const enabled = 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded';
+  
   if (isLoading) return (<IsLoading />);
   return (
     <form
@@ -53,9 +55,22 @@ function ProfileEdit() {
         text-white items-center justify-center` }
       style={ { minHeight: 'calc(100vh - 57px)' } }
     >
-      <img src={ image } alt="user" data-testid="profile-image" />
-      <label htmlFor="name">Name</label>
+      <img
+        className="rounded-full w-48 h-48 m-9"
+        src={ image || noPhoto }
+        alt="user"
+        data-testid="profile-image"
+      />
+      <label
+        className="text-xl"
+        htmlFor="name"
+      >
+        Name
+
+      </label>
       <input
+        className={ `border border-gray-300 p-1 mb-2 mr-1
+      rounded-md dark:bg-gray-800 dark:text-gray-200` }
         data-testid="edit-input-name"
         type="text"
         name="name"
@@ -63,24 +78,48 @@ function ProfileEdit() {
         onChange={ (event) => handleChange(event) }
       />
 
-      <label htmlFor="email">E-mail</label>
+      <label
+        className="text-xl"
+        htmlFor="email"
+      >
+        E-mail
+
+      </label>
       <input
+        className={ `border border-gray-300 mb-2 p-1 mr-1
+          rounded-md dark:bg-gray-800 dark:text-gray-200` }
         data-testid="edit-input-email"
         type="text"
         name="email"
         value={ email }
         onChange={ (event) => handleChange(event) }
       />
-      <label htmlFor="description">Descrição</label>
+      <label
+        className="text-xl"
+        htmlFor="description"
+      >
+        Descrição
+
+      </label>
       <input
+        className={ `border border-gray-300 mb-2 p-1 mr-1
+          rounded-md dark:bg-gray-800 dark:text-gray-200` }
         data-testid="edit-input-description"
         type="text"
         name="description"
         value={ description }
         onChange={ (event) => handleChange(event) }
       />
-      <label htmlFor="image">Imagem</label>
+      <label
+        className="text-xl"
+        htmlFor="image"
+      >
+        Imagem
+
+      </label>
       <input
+        className={ `border border-gray-300 p-1 mb-2 mr-1
+          rounded-md dark:bg-gray-800 dark:text-gray-200` }
         data-testid="edit-input-image"
         type="text"
         name="image"
@@ -89,9 +128,11 @@ function ProfileEdit() {
       />
 
       <button
-        // className={ !validEmail(email) ? 'bg-blue-500 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded' }
+        className={ validation
+          ? enabled
+          : disabled }
         data-testid="edit-button-save"
-        disabled={ !validEmail(email) }
+        disabled={ !validation }
         type="button"
         onClick={ handleClickButton }
       >
