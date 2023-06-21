@@ -18,7 +18,7 @@ function ProfileEdit() {
   const { name, email, image, description } = user;
 
   const regexEmail = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
-  const validation = (name.length > 0 && description.length > 0 && image.length > 0 && regexEmail.test(email))
+  const validation = (name && description && image && regexEmail.test(email))
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
