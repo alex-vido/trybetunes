@@ -28,19 +28,67 @@ function Profile() {
 
   if (isLoading) return (<IsLoading />);
   return (
-    <div>
-      <img src={ image ?? noPhoto } alt="user" data-testid="profile-image" />
-      <NavLink
-        to="/profile/edit"
+    <div
+      className={ `flex flex-col dark:bg-gray-900 
+      text-white items-center justify-center` }
+      style={ { minHeight: 'calc(100vh - 57px)' } }
+    >
+      <div
+        className="flex items-center justify-between w-96 mb-32"
       >
-        Editar perfil
-      </NavLink>
-      <p>Nome</p>
-      <h2>{name}</h2>
-      <h3>E-mail</h3>
-      <h3>{email}</h3>
-      <p>Descrição</p>
-      <h2>{description}</h2>
+        <img
+          className="rounded-full w-48 h-48"
+          data-testid="profile-image"
+          src={ image || noPhoto }
+          alt="user"
+        />
+        <NavLink
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          to="/profile/edit"
+        >
+          Editar perfil
+        </NavLink>
+      </div>
+      <div
+        className="flex flex-col items-start w-96"
+      >
+        <h3
+          className="text-2xl"
+        >
+          Nome
+
+        </h3>
+        <h2
+          className="text-xl mb-5"
+        >
+          {name}
+
+        </h2>
+        <h3
+          className="text-2xl"
+        >
+          E-mail
+
+        </h3>
+        <h3
+          className="text-xl mb-5"
+        >
+          {email}
+
+        </h3>
+        <h3
+          className="text-2xl"
+        >
+          Descrição
+
+        </h3>
+        <h3
+          className="text-xl mb-5"
+        >
+          {description}
+
+        </h3>
+      </div>
     </div>
 
   );

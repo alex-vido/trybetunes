@@ -41,14 +41,18 @@ function ProfileEdit() {
   }, []);
 
   const handleClickButton = async () => {
-    await updateUser({ name, email, image, description });
     setIsLoading(true);
+    await updateUser({ name, email, image, description });
     navigate('/profile');
   };
 
   if (isLoading) return (<IsLoading />);
   return (
-    <form>
+    <form
+      className={ `flex flex-col dark:bg-gray-900 
+        text-white items-center justify-center` }
+      style={ { minHeight: 'calc(100vh - 57px)' } }
+    >
       <img src={ image } alt="user" data-testid="profile-image" />
       <label htmlFor="name">Name</label>
       <input
