@@ -7,7 +7,6 @@ import IsLoading from '../is_loading';
 import { getFavoriteSongs } from '../../services/favoriteSongsAPI';
 
   type AlbumTypeProps = {
-    isLoading: boolean
     album: AlbumType
     musics: SongType[]
   };
@@ -16,15 +15,15 @@ function Album() {
   const [favoriteSongs, setFavoriteSongs] = useState<SongType[]>([]);
   const { id = '' } = useParams();
   const [data, setData] = useState<AlbumTypeProps>({
-    isLoading: false,
     album: {} as AlbumType,
     musics: [],
   });
-  const { album, musics, isLoading } = data;
+  const [isLoading, setIsLoading] = useState(true);
+  const { album, musics } = data;
 
   useEffect(() => {
     const getMusicsFetch = async () => {
-      setData((prevData) => ({ ...prevData, isLoading: true }));
+      setIsLoading(true);
       const fetchMusic = await getMusics(id);
       const fetchFavorites = await getFavoriteSongs();
       setData((prevData) => ({
@@ -34,7 +33,7 @@ function Album() {
       }));
       setFavoriteSongs(fetchFavorites);
 
-      setData((prevData) => ({ ...prevData, isLoading: false }));
+      setIsLoading(false);
     };
     getMusicsFetch();
   }, [id]);
@@ -82,7 +81,6 @@ function Album() {
             previewUrl={ music.previewUrl }
             trackId={ music.trackId }
             favoriteSongs={ favoriteSongs }
-            favoriteActualization={ setFavoriteSongs }
           />))
         }
           </div>

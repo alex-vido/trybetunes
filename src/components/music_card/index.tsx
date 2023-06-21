@@ -9,21 +9,25 @@ type MusicCardProps = {
   previewUrl: string;
   trackId: number;
   favoriteSongs: SongType[];
+  setIsLoading?: React.Dispatch<React.SetStateAction<boolean>>
 };
 
-function MusicCard({ trackName, previewUrl, trackId, favoriteSongs, favoriteActualization }: MusicCardProps) {
+function MusicCard(
+  { trackName, previewUrl, trackId, favoriteSongs, setIsLoading = () => { } }
+  : MusicCardProps,
+) {
   const trackIdString: string = trackId.toString();
 
   const [checkboxState, setCheckboxState] = useState(false);
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (setIsLoading) setIsLoading(true);
     const { checked } = event.target;
     setCheckboxState(checked);
     if (checked) {
       addSong({ trackName, previewUrl, trackId });
     } else {
       removeSong({ trackName, previewUrl, trackId });
-      favoriteActualization(favoriteSongs);
     }
   };
 

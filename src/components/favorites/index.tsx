@@ -10,23 +10,12 @@ function Favorites() {
 
   useEffect(() => {
     const fetchFavoritesInitial = async () => {
-      setIsLoading(true);
       const favorites = await getFavoriteSongs();
       setFavoriteSongs(favorites);
       setIsLoading(false);
     };
     fetchFavoritesInitial();
-  }, []);
-
-  useEffect(() => {
-    const fetchFavorites = async () => {
-      setIsLoading(true);
-      const favorites = await getFavoriteSongs();
-      setFavoriteSongs(favorites);
-    };
-    fetchFavorites();
-    setIsLoading(false);
-  }, [favoriteSongs]);
+  }, [isLoading]);
 
   if (isLoading) return (<IsLoading />);
 
@@ -62,6 +51,7 @@ function Favorites() {
             previewUrl={ favoriteSong.previewUrl }
             trackId={ favoriteSong.trackId }
             favoriteSongs={ favoriteSongs }
+            setIsLoading={ setIsLoading }
           />
         )))
         }
