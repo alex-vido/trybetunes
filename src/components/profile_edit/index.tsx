@@ -18,16 +18,15 @@ function ProfileEdit() {
   const { name, email, image, description } = user;
 
   const regexEmail = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
-  const validation = (name && description && image && regexEmail.test(email))
+  const validation = (name && description && image && regexEmail.test(email));
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, name } = event.target;
+    const { value } = event.target;
     setUser((prevUser) => ({
       ...prevUser,
-      [name]: value,
+      [event.target.name]: value,
     }));
   };
-
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -47,7 +46,7 @@ function ProfileEdit() {
   const disabled = `bg-blue-500 text-white font-bold py-2 px-4 
     rounded opacity-50 cursor-not-allowed`;
   const enabled = 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded';
-  
+
   if (isLoading) return (<IsLoading />);
   return (
     <form
