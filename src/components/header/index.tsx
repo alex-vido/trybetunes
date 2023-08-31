@@ -14,6 +14,7 @@ function Header() {
     };
     fetchUser();
   }, []);
+  
   return (
     isLoading ? (
       <header

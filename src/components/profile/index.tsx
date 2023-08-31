@@ -4,6 +4,7 @@ import { getUser } from '../../services/userAPI';
 import { UserType } from '../../types';
 import IsLoading from '../is_loading';
 import noPhoto from '../../images/no_photo.png';
+import Header from '../header';
 
 function Profile() {
   const [isLoading, setIsLoading] = useState(false);
