@@ -16,14 +16,15 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "build": "vite build",
     "test": "vitest",
     "lint:styles": "npx stylelint '**/*.css'",
     "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json . --ext .js,.jsx,.ts,.tsx",
     "dev": "vite --open",
     "preview": "vite preview",
     "coverage": "vitest run --coverage --watch=false",
-    "prebuild": "npm run build",
-    "build": "gh-pages -d dist"
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "browserslist": {
     "production": [
