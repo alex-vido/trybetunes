@@ -1,4 +1,5 @@
 {
+  "homepage": "https://alex-vido.github.io/trybetunes/",
   "name": "trybetunes",
   "version": "1.0.1",
   "private": true,
@@ -15,13 +16,14 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "build": "vite build",
     "test": "vitest",
     "lint:styles": "npx stylelint '**/*.css'",
     "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json . --ext .js,.jsx,.ts,.tsx",
     "dev": "vite --open",
     "preview": "vite preview",
-    "coverage": "vitest run --coverage --watch=false"
+    "coverage": "vitest run --coverage --watch=false",
+    "prebuild": "npm run build",
+    "build": "gh-pages -d dist"
   },
   "browserslist": {
     "production": [
@@ -43,6 +45,7 @@
     "@vitest/coverage-c8": "^0.30.1",
     "@vitest/coverage-istanbul": "^0.28.4",
     "autoprefixer": "^10.4.14",
+    "gh-pages": "^6.0.0",
     "jsdom": "^21.1.0",
     "postcss": "^8.4.24",
     "prop-types": "^15.8.1",
