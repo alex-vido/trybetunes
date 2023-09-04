@@ -1,5 +1,4 @@
 {
-  "homepage": "https://alex-vido.github.io/trybetunes/",
   "name": "trybetunes",
   "version": "1.0.1",
   "private": true,
@@ -22,9 +21,7 @@
     "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json . --ext .js,.jsx,.ts,.tsx",
     "dev": "vite --open",
     "preview": "vite preview",
-    "coverage": "vitest run --coverage --watch=false",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "coverage": "vitest run --coverage --watch=false"
   },
   "browserslist": {
     "production": [

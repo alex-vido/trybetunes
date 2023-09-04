@@ -18,5 +18,4 @@ export default defineConfig({
       provider: 'istanbul'
     }
   },
-  base: "/trybetunes"
 })
